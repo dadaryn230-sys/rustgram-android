@@ -3,7 +3,7 @@ package one.axgram.core.helpers.remote;
 import android.text.TextUtils;
 
 /**
- * Источники обновлений AxGram.
+ * Источники обновлений RustGram.
  *
  * Проверка идёт в два захода: сначала GitHub Releases, затем — если там пусто
  * или GitHub недоступен — телеграм-канал. Канал важен там, где GitHub закрыт
@@ -14,10 +14,10 @@ import android.text.TextUtils;
 public class AxUpdateConfig {
 
     /** Владелец репозитория на GitHub. */
-    public static final String GITHUB_OWNER = "aevornyx";
+    public static final String GITHUB_OWNER = "dadaryn230-sys";
 
     /** Имя репозитория. Должно совпадать с тем, куда публикуются релизы. */
-    public static final String GITHUB_REPO = "axgram-android";
+    public static final String GITHUB_REPO = "rustgram-android";
 
     /**
      * Канал с метаданными обновлений — БЕЗ символа @.
@@ -26,7 +26,7 @@ public class AxUpdateConfig {
      * приложение никуда не ходит. Формат сообщений в канале описан в
      * {@link ChannelUpdateSource}.
      */
-    public static final String UPDATE_CHANNEL = "axgram_updates";
+    public static final String UPDATE_CHANNEL = "";
 
     /**
      * Бот поддержки — юзернейм БЕЗ символа @.
@@ -34,7 +34,7 @@ public class AxUpdateConfig {
      * Пока пусто, строка «Поддержать автора» в настройках не показывается
      * и приложение никуда не ходит.
      */
-    public static final String SUPPORT_BOT = "axgram_support_bot";
+    public static final String SUPPORT_BOT = "";
 
     public static boolean supportEnabled() {
         return !TextUtils.isEmpty(SUPPORT_BOT);
