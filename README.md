@@ -71,7 +71,7 @@ keytool -genkeypair -v -keystore TMessagesProj/release.keystore -alias rustgram 
 В терминале Windows из корня проекта:
 
 ```powershell
-gradlew.bat :TMessagesProj:assembleDebug
+.\\gradlew.bat :TMessagesProj:assembleDebug
 ```
 
 Выходные APK находятся в:
