@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * открывается страница загрузки, файл ставит сам пользователь.
  *
  * Номер версии берётся из имени файла APK — оно формируется сборкой как
- * AxGram-v12.7.3(1238)-arm64-v8a.apk, где в скобках код версии.
+ * RustGram-v12.7.3(1238)-arm64-v8a.apk, где в скобках код версии.
  */
 public class GithubUpdateSource {
 
@@ -34,15 +34,15 @@ public class GithubUpdateSource {
     private static final int MAX_BODY_BYTES = 512 * 1024;
 
     /**
-     * AxGram-v<версия>(<код>)-<abi>[-debug].apk
+     * RustGram-v<версия>(<код>)-<abi>[-debug].apk
      *
      * Разделителем может быть скобка, точка или дефис: GitHub запрещает
      * скобки в именах файлов релиза и заменяет их точками, поэтому
-     * AxGram-v12.7.3(1238)-arm64-v8a.apk приезжает как
-     * AxGram-v12.7.3.1238.-arm64-v8a.apk.
+     * RustGram-v12.7.3(1238)-arm64-v8a.apk приезжает как
+     * RustGram-v12.7.3.1238.-arm64-v8a.apk.
      */
     private static final Pattern APK_NAME = Pattern.compile(
-            "^AxGram-v(\\d+\\.\\d+(?:\\.\\d+)?)[.(_-]+(\\d+)[.)_-]+(.+?)(?:-debug)?\\.apk$");
+            "^RustGram-v(\\d+\\.\\d+(?:\\.\\d+)?)[.(_-]+(\\d+)[.)_-]+(.+?)(?:-debug)?\\.apk$");
     private static final DispatchQueue queue = new DispatchQueue("AxUpdateCheck");
 
     public interface Callback {
@@ -59,7 +59,7 @@ public class GithubUpdateSource {
             try {
                 callback.onResult(parse(fetch(AxUpdateConfig.releasesApiUrl())), null);
             } catch (Exception e) {
-                FileLog.e("AxGram update: GitHub недоступен", e);
+                FileLog.e("RustGram update: GitHub недоступен", e);
                 callback.onResult(null, e.getMessage() != null ? e.getMessage() : "network error");
             }
         });
@@ -71,7 +71,7 @@ public class GithubUpdateSource {
             conn.setConnectTimeout(TIMEOUT_MS);
             conn.setReadTimeout(TIMEOUT_MS);
             conn.setRequestProperty("Accept", "application/vnd.github+json");
-            conn.setRequestProperty("User-Agent", "AxGram/" + BuildConfig.VERSION_NAME);
+            conn.setRequestProperty("User-Agent", "RustGram/" + BuildConfig.VERSION_NAME);
             int code = conn.getResponseCode();
             if (code == 404) {
                 // релизов ещё нет — это не ошибка
@@ -148,7 +148,7 @@ public class GithubUpdateSource {
 
         String notes = release.optString("body", "");
         update.text = TextUtils.isEmpty(notes)
-                ? ("AxGram " + bestVersion)
+                ? ("RustGram " + bestVersion)
                 : notes.trim();
         return update;
     }
