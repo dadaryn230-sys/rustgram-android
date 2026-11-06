@@ -91,7 +91,7 @@ android {
     buildToolsVersion '35.0.0'
     ndkVersion rootProject.ext.ndkVersion // 27.2.12479018
 
-    defaultConfig.applicationId = "one.axgram.android"
+    defaultConfig.applicationId = "one.rustgram.android"
 
     sourceSets {
 
@@ -422,7 +422,10 @@ dependencies {
     implementation "com.airbnb.android:lottie:6.4.1"
 }
 
-apply plugin: "com.google.gms.google-services"
+// Firebase is optional. Add an owned google-services.json to enable FCM.
+if (file("google-services.json").isFile()) {
+    apply plugin: "com.google.gms.google-services"
+}
 
 // AxGram: блок настроек Sentry удалён вместе с плагином —
 // отчёты о падениях наружу не отправляются.
