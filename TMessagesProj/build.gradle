@@ -168,14 +168,17 @@ android {
         versionName verName
         versionCode verCode
 
-        def appId = "11535358"
-        def appHash = "33d372962fadb01df47e6ceed4e33cd6"
+        // Use credentials created for this RustGram build. Never fall back to
+        // credentials embedded in the upstream AxGram checkout.
+        def appId = properties?.getProperty("TELEGRAM_APP_ID") ?: System.getenv("TELEGRAM_APP_ID")
+        def appHash = properties?.getProperty("TELEGRAM_APP_HASH") ?: System.getenv("TELEGRAM_APP_HASH")
 
-        //obtain your own keys at https://core.telegram.org/api/obtaining_api_id
-
-        if (properties != null) {
-            appId = properties.getProperty("TELEGRAM_APP_ID") ?: System.getenv("TELEGRAM_APP_ID") ?: appId
-            appHash = properties.getProperty("TELEGRAM_APP_HASH") ?: System.getenv("TELEGRAM_APP_HASH") ?: appHash
+        if (appId == null || !(appId ==~ /\\d+/)
+                || appHash == null || !(appHash ==~ /(?i)[0-9a-f]{32}/)) {
+            throw new GradleException(
+                    "Set your own TELEGRAM_APP_ID and TELEGRAM_APP_HASH in local.properties " +
+                    "or environment variables. Do not use credentials from another client."
+            )
         }
 
         buildConfigField "String", "BUILD_VERSION_STRING", "\"" + verName + "\""
